@@ -66,7 +66,6 @@ app.post('/api/books', function (req, res) {
       return console.log(err);
     }
     // add this author to the book
-    newBook.author = author;
 
 
     // save newBook to database
@@ -92,6 +91,29 @@ app.delete('/api/books/:id', function (req, res) {
   });
 });
 
+//add characters
+// Create a character associated with a book
+app.post('/api/books/:book_id/characters', function (req, res) {
+  // Get book id from url params (`req.params`)
+  var bookId = req.params.book_id;
+  db.Book.findById(bookId)
+    .populate('author')
+    .exec(function(err, foundBook) {
+      // handle errors
+      if (err) {
+        console.log("error is", err);
+      } else {
+      // push req.body into characters array
+      foundBook.characters.push(req.body);
+      foundBook.save();
+      res.status(201).json(foundBook);
+
+      // save the book with the new character
+      // send the entire book back
+      }
+    }
+  );
+});
 
 
 
