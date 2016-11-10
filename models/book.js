@@ -8,7 +8,10 @@ var mongoose = require('mongoose'),
 
 var BookSchema = new Schema({
      title: String,
-     author: {type: Schema.Types.ObjectId, ref: 'Author'},
+     author: {
+       type: Schema.Types.ObjectId,
+       ref: 'Author'
+     },
      image: String,
      releaseDate: String,
      characters: [CharacterSchema]
